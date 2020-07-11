@@ -9,7 +9,7 @@ when interacting in these repositories as if they were rust-lang repositories.
 ## Enforcement
 
 Please contact David Tolnay at *dtolnay<!--disable autolink-->@gmail.com* to
-raise moderation issues.
+call attention to code of conduct violations.
 
 Note that while we elect to follow the Rust Code of Conduct, this is not an
 official Rust venue, and consequently enforcement of the code of conduct in
