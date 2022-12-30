@@ -18,6 +18,9 @@ on:
       continue:
         value: ${{jobs.pre_ci.outputs.continue}}
 
+permissions:
+  contents: read
+
 jobs:
   pre_ci:
     runs-on: ubuntu-latest
