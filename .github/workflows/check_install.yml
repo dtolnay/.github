@@ -6,6 +6,11 @@ on:
       crate:
         required: true
         type: string
+  workflow_dispatch:
+    inputs:
+      crate:
+        required: true
+        type: string
 
 permissions: {}
 
