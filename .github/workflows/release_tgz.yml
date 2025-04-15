@@ -25,7 +25,7 @@ jobs:
         with:
           subject-path: ${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz
       - name: Write attestation into intoto.jsonl
-        run: jq --compact-output ${{steps.attest.outputs.bundle-path}} > ${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz.intoto.jsonl
+        run: jq --compact-output . ${{steps.attest.outputs.bundle-path}} > ${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz.intoto.jsonl
       - name: Upload release archive
         run: gh release upload ${{github.event.release.tag_name}} ${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz ${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz.intoto.jsonl
         env:
