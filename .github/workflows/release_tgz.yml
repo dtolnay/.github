@@ -3,7 +3,9 @@ name: Release
 on: workflow_call
 
 permissions:
+  attestations: write
   contents: write
+  id-token: write
 
 jobs:
   upload:
@@ -17,7 +19,14 @@ jobs:
           tag_name: ${{github.event.release.tag_name}}
       - name: Package sources into tar.gz
         run: git archive ${{github.event.release.tag_name}} --prefix=${{github.event.repository.name}}-${{steps.vars.outputs.version}}/ --output=${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz
+      - name: Attest artifact provenance
+        id: attest
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: ${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz
+      - name: Write attestation into intoto.jsonl
+        run: jq --compact-output ${{steps.attest.outputs.bundle-path}} > ${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz.intoto.jsonl
       - name: Upload release archive
-        run: gh release upload ${{github.event.release.tag_name}} ${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz
+        run: gh release upload ${{github.event.release.tag_name}} ${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz ${{github.event.repository.name}}-${{steps.vars.outputs.version}}.tar.gz.intoto.jsonl
         env:
           GH_TOKEN: ${{github.token}}
