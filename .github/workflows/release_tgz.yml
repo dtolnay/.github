@@ -11,7 +11,7 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Determine version from tag name
         id: vars
         run: echo version="${tag_name#v}" >> $GITHUB_OUTPUT
